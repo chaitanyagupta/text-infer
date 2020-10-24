@@ -2,7 +2,6 @@ import elt from './elt';
 import { infer } from './infer';
 import { html, render } from 'lit-html';
 import { toBinaryString } from './utils';
-import jschardet from 'jschardet';
 import * as encoding from './encoding';
 
 
@@ -27,7 +26,3 @@ document.getElementById('infer-input').addEventListener('input', e => {
 window.infer = infer;
 
 window.toBinaryString = toBinaryString;
-
-window.jschardet = jschardet;
-
-window.encoding = encoding;
