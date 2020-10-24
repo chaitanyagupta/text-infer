@@ -2,8 +2,6 @@ import elt from './elt';
 import { infer } from './infer';
 import { html, render } from 'lit-html';
 import { toBinaryString } from './utils';
-import * as encoding from './encoding';
-
 
 const template = (results) =>  html`
 <h1>text-infer</h1>
