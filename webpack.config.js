@@ -36,6 +36,7 @@ module.exports = {
           'file-loader',
         ],
       },
+      { test: /\.handlebars$/, loader: 'handlebars-loader' }
     ],
   },
 };
