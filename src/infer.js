@@ -1,4 +1,6 @@
 import * as base64 from 'base64-arraybuffer';
+import * as asn1js from 'asn1js';
+import { Certificate } from 'pkijs';
 
 const DETECTORS = {};
 const PARSERS = {}
@@ -12,6 +14,7 @@ export function detect(str) {
       matched.push(name);
     }
   });
+  console.log('detectors are', matched);
   return { detectors: matched, context: context };
 }
 
@@ -83,25 +86,7 @@ DETECTORS.url = function (str, context) {
 };
 
 PARSERS.url = function (str, context) {
-  let url = context.url || new URL(str);
-  return {
-    _type: 'url',
-    protocol: url.protocol,
-    username: url.username,
-    password: url.password,
-    hostname: url.hostname,
-    port: url.port,
-    pathname: url.pathname,
-    hash: url.hash,
-    search: url.search,
-    searchParams: (function () {
-      let entries = [];
-      for (let entry of url.searchParams.entries()) {
-        entries.push(entry);
-      }
-      return entries;
-    })()
-  };
+  return context.url || new URL(str);
 };
 
 // JWS
@@ -140,4 +125,25 @@ PARSERS.jws = function (str) {
   } else {
     return null;
   }
+};
+
+// X.509
+
+DETECTORS.pem = function (str, context) {
+  const lines = str.split('\n');
+  const firstLine = lines[0];
+  if (firstLine.startsWith('-----BEGIN ')) {
+    const encodedLines = lines.slice(1, -1);
+    context.pem = base64.decode(encodedLines.join(''));
+    return true;
+  } else {
+    return false;
+  }
+};
+
+PARSERS.pem = function (str, context) {
+  const asn1 = asn1js.fromBER(context.pem);
+  window.asn1 = asn1;
+  const certificate = new Certificate({ schema: asn1.result });
+  return certificate;
 };

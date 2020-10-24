@@ -20,7 +20,7 @@ render(template([]), document.body);
 
 document.getElementById('infer-input').addEventListener('input', e => {
   const str = e.target.value;
-  const inferred = infer(str);
+  const inferred = window.inferred = infer(str);
   render(template(inferred), document.body);
 })
 
