@@ -1,16 +1,14 @@
 import * as base64 from 'base64-arraybuffer';
-import * as asn1js from 'asn1js';
-import { Certificate } from 'pkijs';
 
 const DETECTORS = {};
 const PARSERS = {}
 
-export function detect(str) {
+export async function detect(str) {
   const matched = [];
   const context = {};
-  Object.keys(DETECTORS).forEach(name => {
+  Object.keys(DETECTORS).forEach(async name => {
     const detector = DETECTORS[name];
-    if (detector(str, context)) {
+    if (await detector(str, context)) {
       matched.push(name);
     }
   });
@@ -18,11 +16,11 @@ export function detect(str) {
   return { detectors: matched, context: context };
 }
 
-export function parse(str, parsers, context) {
+export async function parse(str, parsers, context) {
   const results = {};
-  parsers.forEach(name => {
+  parsers.forEach(async name => {
     const parser = PARSERS[name];
-    const parsed = parser(str, context);
+    const parsed = await parser(str, context);
     if (parsed) {
       results[name] = parsed;
     }
@@ -30,9 +28,9 @@ export function parse(str, parsers, context) {
   return results;
 }
 
-export function infer(str) {
-  let { detectors, context } = detect(str);
-  return parse(str, detectors, context);
+export async function infer(str) {
+  let { detectors, context } = await detect(str);
+  return await parse(str, detectors, context);
 }
 
 // hex
@@ -141,7 +139,9 @@ DETECTORS.pem = function (str, context) {
   }
 };
 
-PARSERS.pem = function (str, context) {
+PARSERS.pem = async function (str, context) {
+  const asn1js = await import('asn1js');
+  const { Certificate } = await import('pkijs');
   const asn1 = asn1js.fromBER(context.pem);
   window.asn1 = asn1;
   const certificate = new Certificate({ schema: asn1.result });
