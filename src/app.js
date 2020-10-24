@@ -1,6 +1,5 @@
 import elt from './elt';
 import { infer } from './infer';
-import { toBinaryString } from './utils';
 import indexTemplate from './index.handlebars';
 
 document.body.innerHTML = indexTemplate();
@@ -13,4 +12,3 @@ document.getElementById('infer-input').addEventListener('input', async e => {
 
 window.infer = infer;
 
-window.toBinaryString = toBinaryString;
