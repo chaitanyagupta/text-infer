@@ -12,7 +12,6 @@ export async function detect(str) {
       matched.push(name);
     }
   });
-  console.log('detectors are', matched);
   return { detectors: matched, context: context };
 }
 
@@ -125,7 +124,7 @@ PARSERS.jws = function (str) {
   }
 };
 
-// X.509
+// PEM
 
 DETECTORS.pem = function (str, context) {
   const lines = str.split('\n');
