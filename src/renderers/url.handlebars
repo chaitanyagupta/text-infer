@@ -1,0 +1,42 @@
+<dl>
+  <dt>Scheme</dt>
+  <dd>{{scheme}}</dd>
+
+  {{#if username}}
+  <dt>Username</dt>
+  <dd>{{username}}</dd>
+  {{/if}}
+
+  {{#if password}}
+  <dt>Password</dt>
+  <dd>{{password}}</dd>
+  {{/if}}
+
+  <dt>Hostname</dt>
+  <dd>{{hostname}}</dd>
+
+  {{#if port}}
+  <dt>Port</dt>
+  <dd>{{port}}</dd>
+  {{/if}}
+
+  <dt>Pathname</dt>
+  <dd>{{pathname}}</dd>
+  
+  {{#if search}}
+  <dt>Query Params</dt>
+  <dd>
+    <dl>
+      {{#each searchParams}}
+      <dt>{{name}}</dt>
+      <dd>{{values}}</dd>
+      {{/each}}
+    </dl>
+  </dd>
+  {{/if}}
+
+  {{#if hash}}
+  <dt>Hash</dt>
+  <dd>{{hash}}</dd>
+  {{/if}}
+</dl>
