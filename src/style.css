@@ -1,4 +1,30 @@
-.hello {
-  color: red;
-  /* background: url('./icon.svg'); */
+body {
+    padding-left: 1rem;
+    padding-right: 1rem;
+    font-family: Iowan Old Style, Apple Garamond, Baskerville, Times New Roman, Droid Serif, Times, Source Serif Pro, serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol;
 }
+
+textarea {
+    font-family: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+}
+
+.inferred-container {
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+}
+
+dl {
+  display: grid;
+  grid-template-columns: max-content auto;
+}
+
+dt {
+  grid-column-start: 1;
+  margin-right: 1rem;
+}
+
+dd {
+  grid-column-start: 2;
+  margin-bottom: 0;
+}
+

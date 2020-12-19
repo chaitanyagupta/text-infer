@@ -3,6 +3,8 @@ import { infer } from './infer';
 import { render } from './renderers';
 import indexTemplate from './index.handlebars';
 import renderContainerTemplate from './renderers/container.handlebars';
+import 'bootstrap/dist/css/bootstrap-reboot.css';
+import './style.css';
 
 function init() {
   document.body.innerHTML = indexTemplate();
@@ -17,7 +19,6 @@ function init() {
       window.location.hash = '';
     }
     const inferred = window.inferred = await infer(str);
-    console.log('inferred', inferred);
     window.inferred = inferred;
     const resultsEl = document.getElementById('results');
     resultsEl.innerHTML = '';
@@ -25,7 +26,7 @@ function init() {
       const value = inferred[parser];
       results.innerHTML += renderContainerTemplate({ 
         parser: parser,
-        rendered: render(value, parser) 
+        rendered: render(value, parser)
       });
     });
   }
