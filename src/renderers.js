@@ -43,7 +43,7 @@ RENDERERS.url = function (url) {
   };
 
   return urlTemplate({ 
-    scheme: url.protocol,
+    scheme: url.protocol.slice(0, url.protocol.length - 1),
     username: url.username,
     password: url.password,
     hostname: url.hostname,
